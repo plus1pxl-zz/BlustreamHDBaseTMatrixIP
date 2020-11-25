@@ -1,0 +1,648 @@
+{
+    "CrestronSerialDeviceApi": {
+        "DeviceSupport": {
+            "SupportsFeedback": true,
+            "SupportsDiscretePower": false,
+            "SupportsTogglePower": false,
+            "SupportsPowerFeedback": false,
+            "SupportsTemperatureFeedback": false,
+            "SupportsWarmUpTime": false,
+            "SupportsCoolDownTime": false,
+            "SupportsDisconnect": true,
+            "SupportsReconnect": true
+        },
+        "GeneralInformation": {
+            "DeviceType": "AudioVideo Switcher",
+            "Manufacturer": "Blustream",
+            "BaseModel": "HMXL88-V2",
+            "VersionDate": "2020-11-05 09:05:00.000",
+            "DriverVersion": "1.0.000.0000",
+            "SdkVersion": "4.1.000.0016",
+            "Description": "AV Solutions Blustram IP Control",
+            "Guid": "59462D0A-6071-4250-898F-5CD5DA52E40A",
+            "SupportedSeries": [
+                "HMXL",
+                "C",
+                "PRO",
+                "PLA"
+            ],
+            "SupportedModels": [
+                "HMXL44CS-KIT",
+                "HMXL44-KIT-V2",
+                "C44-KIT",
+                "PRO48HBT70CS",
+                "PRO48HBT70",
+                "PRO4V4H8HBT70",
+                "PLA66ARC-V2",
+                "PLA66ARC",
+                "PLA66L-V2",
+                "PLA66L",
+                "C66",
+                "PRO88HBT100CS",
+                "PRO88HBT70CS",
+                "PRO88HBT70",
+                "PLA88ARC-V2",
+                "PLA88ARC",
+                "PLA88L-V2",
+                "PLA88L",
+                "C88",
+                "HMXL88-V2",
+                "HMXL88",
+                "PRO16HBT100CS",
+                "PRO16HBT70CS"
+            ]
+        },
+        "Api": {
+            "Communication": {
+                "CommunicationType": 1,
+                "Protocol": -1,
+                "Baud": -1,
+                "Parity": -1,
+                "HwHandshake": -1,
+                "SwHandshake": -1,
+                "DataBits": 0,
+                "StopBits": -1,
+                "Port": 23,
+                "EnableAutoPolling": true,
+                "EnableAutoReconnect": true,
+                "TimeBetweenCommands": 250,
+                "TimeBetweenCommandsOverride": 0,
+                "ResponseTimeout": 3000,
+                "WaitForResponse": true,
+                "IpProtocol": 0,
+                "IsUserAdjustable": false,
+                "Authentication": {
+                    "Type": "None",
+                    "Required": false
+                },
+                "IsSecure": false,
+                "UserAdjustableProperties": [],
+                "DeviceId": 0
+            },
+            "StandardCommands": {
+                "AudioVideoSwitcherRoutePoll": {
+                    "Command": "STATUS"
+                },
+                "AudioVideoSwitcherRoute": {
+                    "Command": "OUT{output}FR{input}"
+                }
+            },
+            "CustomCommands": [],
+            "PowerWaitPeriod": {
+                "UseLocalWarmupTimer": false,
+                "WarmUpTime": 1,
+                "UseLocalCooldownTimer": false,
+                "CoolDownTime": 1
+            },
+            "Feedback": {
+                "Header": "->",
+                "ApiDelimiter": "\r",
+                "CommandAckNak": {
+                    "Ack": "OK",
+                    "Nak": "NOPE"
+                },
+                "PowerFeedback": {
+                    "Feedback": {
+                        "On": "ON",
+                        "Off": "OFF"
+                    },
+                    "GroupHeader": "POW="
+                }
+            },
+            "AudioVideoSwitcher": {
+                "AutoDetectConfiguration": false,
+                "SupportsAudioBreakaway": false,
+                "NullInputIdentifier": "NONE",
+                "VolumeScalingInfo": {
+                    "MaximumDeviceLevel": 100,
+                    "MinimumDeviceLevel": 0,
+                    "DeviceStepSize": 1
+                },
+                "BassScalingInfo": {
+                    "MaximumDeviceLevel": 10,
+                    "MinimumDeviceLevel": -10,
+                    "DeviceStepSize": 1
+                },
+                "TrebleScalingInfo": {
+                    "MaximumDeviceLevel": 10,
+                    "MinimumDeviceLevel": -10,
+                    "DeviceStepSize": 1
+                },
+                "RoutableOutputs": [
+                    {
+                        "ApiIdentifier": "01",
+                        "Id": "output1",
+                        "Name": "Output 1",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input1",
+                                "description": "Output 1 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 1"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "02",
+                        "Id": "output2",
+                        "Name": "Output 2",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input2",
+                                "description": "Output 2 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 2"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "03",
+                        "Id": "output3",
+                        "Name": "Output 3",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input3",
+                                "description": "Output 3 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 3"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "04",
+                        "Id": "output4",
+                        "Name": "Output 4",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input4",
+                                "description": "Output 4 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 4"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "05",
+                        "Id": "output5",
+                        "Name": "Output 5",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input5",
+                                "description": "Output 5 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 5"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "06",
+                        "Id": "output6",
+                        "Name": "Output 6",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input6",
+                                "description": "Output 6 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 6"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "07",
+                        "Id": "output7",
+                        "Name": "Output 7",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input7",
+                                "description": "Output 7 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 7"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "08",
+                        "Id": "output8",
+                        "Name": "Output 8",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input8",
+                                "description": "Output 8 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 8"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "09",
+                        "Id": "output9",
+                        "Name": "Output 9",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input9",
+                                "description": "Output 9 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 9"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "10",
+                        "Id": "output10",
+                        "Name": "Output 10",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input10",
+                                "description": "Output 10 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 10"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "11",
+                        "Id": "output11",
+                        "Name": "Output 11",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input11",
+                                "description": "Output 11 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 11"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "12",
+                        "Id": "output12",
+                        "Name": "Output 12",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input12",
+                                "description": "Output 12 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 12"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "13",
+                        "Id": "output13",
+                        "Name": "Output 13",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input13",
+                                "description": "Output 13 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 13"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "14",
+                        "Id": "output14",
+                        "Name": "Output 14",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input14",
+                                "description": "Output 14 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 14"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "15",
+                        "Id": "output15",
+                        "Name": "Output 15",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-RX",
+                        "Type": "IndirectOutput",
+                        "AudioOutputDetails": [],
+                        "VideoOutputDetails": [
+                            {
+                                "type": "Input15",
+                                "description": "Output 15 HDBaseT Video Output",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Output 15"
+                            }
+                        ]
+                    }
+                ],
+                "RoutableInputs": [
+                    {
+                        "ApiIdentifier": "01",
+                        "Id": "input1",
+                        "Name": "Input 1",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input1",
+                                "description": "Input 1 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 1"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "02",
+                        "Id": "input2",
+                        "Name": "Input 2",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input2",
+                                "description": "Input 2 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 2"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "03",
+                        "Id": "input3",
+                        "Name": "Input 3",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input3",
+                                "description": "Input 3 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 3"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "04",
+                        "Id": "input4",
+                        "Name": "Input 4",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input4",
+                                "description": "Input 4 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 4"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "05",
+                        "Id": "input5",
+                        "Name": "Input 5",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input5",
+                                "description": "Input 5 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 5"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "06",
+                        "Id": "input6",
+                        "Name": "Input 6",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input6",
+                                "description": "Input 6 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 6"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "07",
+                        "Id": "input7",
+                        "Name": "Input 7",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input7",
+                                "description": "Input 7 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 7"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "08",
+                        "Id": "input8",
+                        "Name": "Input 8",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input8",
+                                "description": "Input 8 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 8"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "09",
+                        "Id": "input9",
+                        "Name": "Input 9",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input9",
+                                "description": "Input 9 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 9"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "10",
+                        "Id": "input10",
+                        "Name": "Input 10",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input10",
+                                "description": "Input 10 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 10"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "11",
+                        "Id": "input11",
+                        "Name": "Input 11",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input11",
+                                "description": "Input 11 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 11"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "12",
+                        "Id": "input12",
+                        "Name": "Input 12",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input12",
+                                "description": "Input 12 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 12"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "13",
+                        "Id": "input13",
+                        "Name": "Input 13",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input13",
+                                "description": "Input 13 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 13"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "14",
+                        "Id": "input14",
+                        "Name": "Input 14",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input14",
+                                "description": "Input 14 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 14"
+                            }
+                        ]
+                    },
+                    {
+                        "ApiIdentifier": "15",
+                        "Id": "input15",
+                        "Name": "Input 15",
+                        "Manufacturer": "Blustream",
+                        "Model": "IP200UHD-TX",
+                        "Type": "IndirectInput",
+                        "AudioInputDetails": [],
+                        "VideoInputDetails": [
+                            {
+                                "type": "Input15",
+                                "description": "Input 15 HDBaseT Video Input",
+                                "connector": "GenericVideo",
+                                "friendlyName": "Input 15"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
