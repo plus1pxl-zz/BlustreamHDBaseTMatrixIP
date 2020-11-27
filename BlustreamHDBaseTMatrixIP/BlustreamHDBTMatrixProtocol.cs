@@ -1,4 +1,7 @@
-﻿namespace AVSwitcherBlustreamHDBTMatrixIP
+﻿using System.Text;
+using Independentsoft.Exchange;
+
+namespace AVSwitcherBlustreamHDBTMatrixIP
 {
     using Crestron.RAD.Common.BasicDriver;
     using Crestron.RAD.Common.Enums;
@@ -16,117 +19,133 @@
     public class BlustreamHDBTMatrixProtocol : AAudioVideoSwitcherProtocol
     {
 
+        private StringBuilder sbResponse;
+
         public BlustreamHDBTMatrixProtocol(ISerialTransport transport, byte id)
             : base(transport, id)
         {
             base.PowerIsOn = true;
+            base.PollingInterval = 20000;
+            this.sbResponse = new StringBuilder("");
         }
 
-        protected override void DeConstructSwitcherRoute(string response)
+        protected override ValidatedRxData ResponseValidator(string response, CommonCommandGroupType commandGroup)
         {
+            return base.ResponseValidator(response, commandGroup);
         }
 
         public override void DataHandler(string rx)
         {
-            try
+
+            if (!rx.Contains("SUCCESS") | !rx.Contains("ERROR"))
             {
-                string rxToLower = rx.ToLower();
-                char delimiter = '\r';
-                foreach (string str in rxToLower.Split(delimiter))
+                sbResponse.Append(rx);
+
+                if (rx.Contains("MAC"))
                 {
-                    string input = str.Trim();
-                    if (!string.IsNullOrEmpty(input))
+                    List<string> processedFeedback = ProcessResponse(sbResponse.ToString());
+                    sbResponse.Clear();
+
+                    foreach (var feedbackLine in processedFeedback)
                     {
-                        if (input.StartsWith("[error]"))
-                        {
-                            base.Log("Unable to switch: " + input);
-                            continue;
-                        }
-
-                        if (input.StartsWith("="))
-                        {
-                            string pattern = @"^output.*(?:\r\n|[\r\n])(?:.*(?:\r\n|[\r\n]))*^audio";
-                            string outputsInfoRx = Regex.Match(input, pattern, RegexOptions.Multiline).ToString();
-
-                            DataHandler(outputsInfoRx);
-                            if (outputsInfoRx.Length > 0)
-                            {
-                                List<string> outputsInfoArr = SplitByLine(outputsInfoRx).ToList();
-                                outputsInfoArr.RemoveAt(outputsInfoArr.Count - 1);
-
-                                string[] outputInfoKeys = SplitByTwoOrMoreWhiteSpaces(outputsInfoArr[0]).ToArray();
-                                int numberOfOutputs = outputsInfoArr.Count - 1;
-                                int numberOfProperties = outputInfoKeys.Length;
-
-                                //Dictionary<string, string>[] outputsInfo = new Dictionary<string, string>[numberOfOutputs];
-                                List<List<Dictionary<string, string>>> outputsInfo = new List<List<Dictionary<string, string>>>();
-
-                                for (int i = 0; i < numberOfOutputs; i++)
-                                {
-                                    string[] outputInfoValues = SplitByTwoOrMoreWhiteSpaces(outputsInfoArr[i + 1]).ToArray();
-                                    List<Dictionary<string, string>> outputInfo = new List<Dictionary<string, string>>();
-
-                                    for (int j = 0; j < numberOfProperties; j++)
-                                    {
-                                        Dictionary<string, string> keyValuePair = new Dictionary<string, string>();
-                                        keyValuePair.Add(outputInfoKeys[j], outputInfoValues[j]);
-                                        outputInfo.Add(keyValuePair);
-                                    }
-
-                                    outputsInfo.Add(outputInfo);
-                                }
-
-                                for (int i = 0; i < outputsInfo.Count; i++)
-                                {
-                                    string outputExtenderStr = string.Empty;
-                                    string inputExtenderStr = string.Empty;
-
-                                    foreach (var outputInfo in outputsInfo[i])
-                                    {
-                                        if (outputInfo.ContainsKey("output"))
-                                        {
-                                            outputExtenderStr = outputInfo["output"];
-                                        }
-                                        else if (outputInfo.ContainsKey("fromin"))
-                                        {
-                                            inputExtenderStr = outputInfo["fromin"];
-                                        }
-                                    }
-                                    AudioVideoExtender outputExtender = this.GetExtenderByApiIdentifier(outputExtenderStr);
-                                    AudioVideoExtender inputExtender = this.GetExtenderByApiIdentifier(inputExtenderStr);
-
-                                    if (outputExtender != null)
-                                    {
-                                        outputExtender.VideoSourceExtenderId = inputExtender.Id;
-                                    }
-                                }
-                            }
-
-                            continue;
-                        }
-
-                        Match commandSuccess = new Regex(@"\[success\].+?(\d+).+?(\d+)").Match(input);
-
-                        if (commandSuccess.Success)
-                        {
-                            AudioVideoExtender outputExtender = this.GetExtenderByApiIdentifier(commandSuccess.Groups[1].Value);
-                            AudioVideoExtender inputExtender = this.GetExtenderByApiIdentifier(commandSuccess.Groups[2].Value);
-
-                            if (outputExtender != null)
-                            {
-                                outputExtender.VideoSourceExtenderId = inputExtender.Id;
-                            }
-                        }
+                        base.DataHandler(feedbackLine);
                     }
                 }
             }
-            catch (Exception e)
+        }
+
+        private List<string> ProcessResponse(string input)
+        {
+            string inputToLower = input.ToLower();
+            List<string> processedFeedback = new List<string>();
+
+            try
             {
-                base.Log(string.Concat("Unable to parse Blustream response: ", e.Message));
-                base.Log(string.Concat("Response was: ", rx));
+                string pattern = @"^output.*(?:\r\n|[\r\n])(?:.*(?:\r\n|[\r\n]))*^audio";
+                string outputsInfoRx = Regex.Match(inputToLower, pattern, RegexOptions.Multiline).ToString();
+
+
+                if (outputsInfoRx.Length > 0)
+                {
+                    List<string> outputsInfoRaw = SplitByLine(outputsInfoRx).ToList();
+                    outputsInfoRaw.RemoveAt(outputsInfoRaw.Count - 1);
+
+                    List<string> outputInfoKeys = SplitByTwoOrMoreWhiteSpaces(outputsInfoRaw[0]).ToList();
+                    int numberOfOutputs = outputsInfoRaw.Count - 1;
+                    int numberOfProperties = outputInfoKeys.Count;
+
+                    List<List<Dictionary<string, string>>> outputsInfo = new List<List<Dictionary<string, string>>>();
+
+                    for (int i = 0; i < numberOfOutputs; i++)
+                    {
+                        string[] outputInfoValues = SplitByTwoOrMoreWhiteSpaces(outputsInfoRaw[i + 1]).ToArray();
+                        List<Dictionary<string, string>> outputInfo = new List<Dictionary<string, string>>();
+
+                        for (int j = 0; j < numberOfProperties; j++)
+                        {
+                            Dictionary<string, string> keyValuePair = new Dictionary<string, string>();
+                            keyValuePair.Add(outputInfoKeys[j], outputInfoValues[j]);
+                            outputInfo.Add(keyValuePair);
+                        }
+
+                        outputsInfo.Add(outputInfo);
+                    }
+
+                    for (int i = 0; i < outputsInfo.Count; i++)
+                    {
+                        string outputExtenderStr = string.Empty;
+                        string inputExtenderStr = string.Empty;
+
+                        foreach (var outputInfo in outputsInfo[i])
+                        {
+                            if (outputInfo.ContainsKey("output"))
+                            {
+                                outputExtenderStr = outputInfo["output"];
+                            }
+                            else if (outputInfo.ContainsKey("fromin"))
+                            {
+                                inputExtenderStr = outputInfo["fromin"];
+                            }
+                        }
+
+                        processedFeedback.Add($"->ROUTED={outputExtenderStr}:{inputExtenderStr}\r");
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                CrestronConsole.PrintLine($"Unable to process feedback!!!");
+                CrestronConsole.Print(exception.ToString());
             }
 
-            base.DataHandler(rx);
+            return processedFeedback;
+        }
+
+        protected override void DeConstructSwitcherRoute(string response)
+        {
+            // Receiving: ROUTED=OUTPUT#1:INPUT#1
+            //            ROUTED=<output ID>:<input ID>
+            //            ROUTED= is stripped out of response before this is called. 
+
+            var routePath = response.Split(':');
+            AudioVideoExtender inputExtender = null;
+            AudioVideoExtender outputExtender = null;
+
+            // We can get the extender objects here using the API identifier set
+            // in the embedded file.
+            // We can also get the extender objects by their unique ID using GetExtenderById
+            outputExtender = GetExtenderByApiIdentifier(routePath[0]);
+            inputExtender = routePath.Length > 1 ? GetExtenderByApiIdentifier(routePath[1]) : null;
+
+            // Figured out which input is routed to the specified output
+            // Now update the output extender with the current source routed to it
+            // The framework will figure out if this was a real change or not if it is not done here.
+            if (outputExtender != null)
+            {
+                outputExtender.VideoSourceExtenderId = inputExtender == null ?
+                    null : inputExtender.Id;
+                CrestronConsole.PrintLine($"IN:{inputExtender.ApiIdentifier} routed to OUT{outputExtender.ApiIdentifier}");
+            }
         }
 
         protected override bool PrepareStringThenSend(CommandSet commandSet)
@@ -140,7 +159,6 @@
             return base.PrepareStringThenSend(commandSet);
         }
 
-        static 
 
         static IEnumerable<string> SplitByLine(string str)
         {
@@ -157,5 +175,7 @@
                 .Select(i => i.Trim())
                 .Where(i => !string.IsNullOrEmpty(i));
         }
+
+
     }
 }

@@ -14,7 +14,7 @@
         "GeneralInformation": {
             "DeviceType": "AudioVideo Switcher",
             "Manufacturer": "Blustream",
-            "BaseModel": "HMXL88-V2",
+            "BaseModel": "HMXL44CS-KIT-V2",
             "VersionDate": "2020-11-05 09:05:00.000",
             "DriverVersion": "1.0.000.0000",
             "SdkVersion": "4.1.000.0016",
@@ -97,16 +97,15 @@
             "Feedback": {
                 "Header": "->",
                 "ApiDelimiter": "\r",
-                "CommandAckNak": {
-                    "Ack": "OK",
-                    "Nak": "NOPE"
-                },
                 "PowerFeedback": {
                     "Feedback": {
                         "On": "ON",
                         "Off": "OFF"
                     },
                     "GroupHeader": "POW="
+                },
+                "RoutedExtenderFeedback": {
+                    "GroupHeader": "ROUTED="
                 }
             },
             "AudioVideoSwitcher": {
