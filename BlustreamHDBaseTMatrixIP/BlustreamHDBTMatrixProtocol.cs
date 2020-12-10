@@ -12,9 +12,9 @@ namespace AVSwitcherBlustreamHDBTMatrixIP
     using Crestron.SimplSharp;
 
     using System;
-    using System.Text.RegularExpressions;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     public class BlustreamHDBTMatrixProtocol : AAudioVideoSwitcherProtocol
     {
@@ -61,19 +61,19 @@ namespace AVSwitcherBlustreamHDBTMatrixIP
 
             try
             {
-                string pattern = @"^output.*(?:\r\n|[\r\n])(?:.*(?:\r\n|[\r\n]))*^audio";
+                string pattern = @"^output.+(?:\r\n|[\r\n])(?:.{2,}(?:\r\n|[\r\n]))+^";
                 string outputsInfoRx = Regex.Match(inputToLower, pattern, RegexOptions.Multiline).ToString();
-
 
                 if (outputsInfoRx.Length > 0)
                 {
                     List<string> outputsInfoRaw = SplitByLine(outputsInfoRx).ToList();
-                    outputsInfoRaw.RemoveAt(outputsInfoRaw.Count - 1);
 
                     List<string> outputInfoKeys = SplitByTwoOrMoreWhiteSpaces(outputsInfoRaw[0]).ToList();
                     int numberOfOutputs = outputsInfoRaw.Count - 1;
                     int numberOfProperties = outputInfoKeys.Count;
 
+
+                    //collection used to store different feedback for each output 
                     List<List<Dictionary<string, string>>> outputsInfo = new List<List<Dictionary<string, string>>>();
 
                     for (int i = 0; i < numberOfOutputs; i++)
@@ -98,13 +98,28 @@ namespace AVSwitcherBlustreamHDBTMatrixIP
 
                         foreach (var outputInfo in outputsInfo[i])
                         {
-                            if (outputInfo.ContainsKey("output"))
+                            if (outputInfo.ContainsKey("output") || outputInfo.ContainsKey("outputport"))
                             {
-                                outputExtenderStr = outputInfo["output"];
+                                if (outputInfo.ContainsKey("output"))
+                                {
+                                    outputExtenderStr = outputInfo["output"];
+                                }
+                                else if (outputInfo.ContainsKey("outputport"))
+                                {
+                                    outputExtenderStr = outputInfo["outputport"];
+                                }
+
                             }
-                            else if (outputInfo.ContainsKey("fromin"))
+                            else if (outputInfo.ContainsKey("fromin") || outputInfo.ContainsKey("selectinput"))
                             {
-                                inputExtenderStr = outputInfo["fromin"];
+                                if (outputInfo.ContainsKey("fromin"))
+                                {
+                                    outputExtenderStr = outputInfo["fromin"];
+                                }
+                                else if (outputInfo.ContainsKey("selectinput"))
+                                {
+                                    outputExtenderStr = outputInfo["selectinput"];
+                                }
                             }
                         }
 

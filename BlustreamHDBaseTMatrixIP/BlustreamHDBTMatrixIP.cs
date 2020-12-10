@@ -4,7 +4,9 @@
     using Crestron.RAD.Common.Interfaces;
     using Crestron.RAD.Common.Transports;
     using Crestron.RAD.DeviceTypes.AudioVideoSwitcher;
+
     using Crestron.SimplSharp;
+
     using System;
 
     public class BlustreamHDBTMatrixIP : AAudioVideoSwitcher, ITcp
