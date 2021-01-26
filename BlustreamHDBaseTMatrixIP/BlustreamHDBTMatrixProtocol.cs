@@ -98,6 +98,7 @@ namespace AVSwitcherBlustreamHDBTMatrixIP
 
                         foreach (var outputInfo in outputsInfo[i])
                         {
+                            CrestronConsole.PrintLine($"{outputInfo.Keys} to {outputInfo.Values}");
                             if (outputInfo.ContainsKey("output") || outputInfo.ContainsKey("outputport"))
                             {
                                 if (outputInfo.ContainsKey("output"))
@@ -123,6 +124,7 @@ namespace AVSwitcherBlustreamHDBTMatrixIP
                             }
                         }
 
+                        CrestronConsole.PrintLine($"->ROUTED={outputExtenderStr}:{inputExtenderStr}\r");
                         processedFeedback.Add($"->ROUTED={outputExtenderStr}:{inputExtenderStr}\r");
                     }
                 }
@@ -138,6 +140,7 @@ namespace AVSwitcherBlustreamHDBTMatrixIP
 
         protected override void DeConstructSwitcherRoute(string response)
         {
+            CrestronConsole.PrintLine($"{response}");
             // Receiving: ROUTED=OUTPUT#1:INPUT#1
             //            ROUTED=<output ID>:<input ID>
             //            ROUTED= is stripped out of response before this is called. 

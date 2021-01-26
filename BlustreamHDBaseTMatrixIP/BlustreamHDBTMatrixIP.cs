@@ -36,6 +36,7 @@
                 CustomLogger = this.InternalCustomLogger
             };
 
+
             base.AudioVideoSwitcherProtocol = blustreamHDBTMatrixProtocol;
             BlustreamHDBTMatrixIP blustreamHDBTMatrix = this;
             base.AudioVideoSwitcherProtocol.RxOut += new RxOut(blustreamHDBTMatrix.SendRxOut);
