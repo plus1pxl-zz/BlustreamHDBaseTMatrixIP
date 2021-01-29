@@ -1,4 +1,6 @@
-﻿namespace AVSwitcherBlustreamHDBTMatrixIP
+﻿using Crestron.RAD.Common.Enums;
+
+namespace AVSwitcherBlustreamHDBTMatrixIP
 {
     using Crestron.RAD.Common.BasicDriver;
     using Crestron.RAD.Common.Interfaces;
@@ -41,6 +43,8 @@
             BlustreamHDBTMatrixIP blustreamHDBTMatrix = this;
             base.AudioVideoSwitcherProtocol.RxOut += new RxOut(blustreamHDBTMatrix.SendRxOut);
             base.AudioVideoSwitcherProtocol.Initialize(base.AudioVideoSwitcherData);
+
+
         }
     }
 }
